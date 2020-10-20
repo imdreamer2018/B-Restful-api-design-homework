@@ -4,9 +4,7 @@ import com.thoughtworks.capability.gtb.restfulapidesign.dto.Student;
 import lombok.Data;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class StudentRepository {
@@ -45,5 +43,13 @@ public class StudentRepository {
 
     public void deleteById(Integer studentId) {
         studentMap.remove(studentId);
+    }
+
+    public List<Student> findAll() {
+        List<Student> students = new ArrayList<>();
+        for (Map.Entry<Integer, Student> student: studentMap.entrySet()) {
+            students.add(student.getValue());
+        }
+        return students;
     }
 }
