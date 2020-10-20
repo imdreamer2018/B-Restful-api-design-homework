@@ -52,4 +52,9 @@ public class StudentRepository {
         }
         return students;
     }
+
+    public void updateById(Integer studentId, Student studentRequest) {
+        studentMap.remove(studentId);
+        studentMap.put(studentId, studentRequest);
+    }
 }

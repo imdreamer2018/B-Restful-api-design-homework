@@ -40,4 +40,20 @@ public class StudentService {
                     .collect(Collectors.toList());
         return students;
     }
+
+    public Student getStudentById(Integer studentId) {
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        if (!studentOptional.isPresent())
+            throw new BadRequestException("student is not existed!");
+        return studentOptional.get();
+    }
+
+    public Student updateStudentById(Integer studentId, Student studentRequest) {
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        if (!studentOptional.isPresent())
+            throw new BadRequestException("student is not existed!");
+        studentRequest.setId(studentId);
+        studentRepository.updateById(studentId, studentRequest);
+        return studentRequest;
+    }
 }
