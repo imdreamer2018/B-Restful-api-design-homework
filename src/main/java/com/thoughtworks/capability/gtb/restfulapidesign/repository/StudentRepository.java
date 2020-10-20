@@ -30,7 +30,7 @@ public class StudentRepository {
     }
 
     public Optional<Student> findById(Integer studentId) {
-        return Optional.ofNullable(studentMap.get(studentId));
+        return Optional.ofNullable(studentMap.get(studentId - 1));
     }
 
     public Optional<Student> findByName(String name) {

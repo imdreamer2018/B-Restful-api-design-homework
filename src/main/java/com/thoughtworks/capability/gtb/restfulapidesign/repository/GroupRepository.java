@@ -4,9 +4,7 @@ import com.thoughtworks.capability.gtb.restfulapidesign.dto.Group;
 import com.thoughtworks.capability.gtb.restfulapidesign.dto.Student;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class GroupRepository {
@@ -23,14 +21,26 @@ public class GroupRepository {
         this.studentRepository = studentRepository;
     }
 
-    private List<Group> groups = new ArrayList<>();
+    private Map<Integer, Group> groups = new HashMap<>();
 
     public List<Group> findAll() {
-        return groups;
+        List<Group> groupsList = new ArrayList<>();
+        for (Map.Entry<Integer, Group> group: groups.entrySet()) {
+            groupsList.add(group.getValue());
+        }
+        return groupsList;
+    }
+
+    public Optional<Group> findById(Integer groupId) {
+        return Optional.ofNullable(groups.get(groupId - 1));
+    }
+
+    public void updateById(Integer groupId, Group groupRequest) {
+        groups.get(groupId).setName(groupRequest.getName());
     }
 
     public void save(Group group) {
-        groups.add(group);
+        groups.put(group.getId(), group);
     }
 
     public void deleteAll() {
@@ -46,7 +56,7 @@ public class GroupRepository {
             List<Student> students = new ArrayList<>();
             Group group = new Group(groupIndex, groupIndex + GROUP_NAME, GROUP_NOTE, students);
             if (groups.size() < GROUP_NUM) {
-                groups.add(group);
+                groups.put(groupIndex, group);
             }
             groups.get(groupIndex).setId(groupIndex + 1);
             groups.get(groupIndex).setName(groupIndex + 1 + GROUP_NAME);

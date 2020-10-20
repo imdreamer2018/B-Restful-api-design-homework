@@ -3,10 +3,7 @@ package com.thoughtworks.capability.gtb.restfulapidesign.controller;
 import com.thoughtworks.capability.gtb.restfulapidesign.dto.Group;
 import com.thoughtworks.capability.gtb.restfulapidesign.service.GroupService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,20 @@ public class GroupController {
     @ResponseStatus(HttpStatus.CREATED)
     public List<Group> createGroup() {
         return groupService.createGroup();
+    }
+
+    @PutMapping("/{id}")
+    public Group updateGroup(@PathVariable Integer id, @RequestBody Group group) {
+        return groupService.updateGroup(id, group);
+    }
+
+    @GetMapping
+    public List<Group> getGroups() {
+        return groupService.getGroups();
+    }
+
+    @GetMapping("/{id}")
+    public Group getGroupById(@PathVariable Integer id) {
+        return groupService.getGroupById(id);
     }
 }
